@@ -36,3 +36,4 @@ yarn-error.log*
 next-env.d.ts
 
 .env*
+sample_faa_data.ts
