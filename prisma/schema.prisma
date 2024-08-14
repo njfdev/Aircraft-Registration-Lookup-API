@@ -9,6 +9,151 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum FaaRegistrantType {
+  INDIVIDUAL // 1
+  PARTNERSHIP // 2
+  CORPORTATION // 3
+  CO_OWNED // 4
+  GOVERNMENT // 5
+  LLC // 7
+  NON_CITIZEN_CORPORATION // 8
+  NON_CITIZEN_CO_OWNED // 9
+}
+
+enum FaaRegistrantRegion {
+  EASTERN // 1 
+  SOUTHWESTERN // 2
+  CENTRAL // 3
+  WESTERN_PACIFIC // 4
+  ALASKAN // 5
+  SOUTHERN // 7
+  EUROPEAN // 8
+  GREAT_LAKES // C
+  NEW_ENGLAND // E
+  NORTHWEST_MOUNTAIN // S
+}
+
+enum FaaAircraftType {
+  GLIDER // 1
+  BALLOON // 2
+  BLIMP // 3
+  FIXED_WING_SINGLE_ENGINE // 4
+  FIXED_WING_MULTI_ENGINE // 5
+  ROTORCRAFT // 6
+  WEIGHT_SHIFT_CONTROL // 7
+  POWERED_PARACHUTE // 8
+  GYROPLANE // 9
+  HYBRID_LIFT // H
+  OTHER // O
+}
+
+enum FaaEngineType {
+  NONE // 0
+  RECIPROCATING // 1
+  TURBO_PROP // 2
+  TURBO_SHAFT // 3
+  TURBO_JET // 4
+  TURBO_FAN // 5
+  RAMJET // 6
+  TWO_CYCLE // 7
+  FOUR_CYCLE // 8
+  UNKNOWN // 9
+  ELECTRIC // 10
+  ROTARY // 11
+}
+
+model FaaAircraftRegistration {
+  n_number                String               @unique
+  serial_number           String               @unique
+  mft_mdl_code            String
+  eng_mfr_mdl             String?
+  year_mfr                Int?
+  registrant_type         FaaRegistrantType?
+  registrant_name         String?
+  registrant_street       String?
+  registrant_street2      String?
+  registrant_city         String?
+  registrant_state        String?
+  registrant_zip_code     String?
+  registrant_region       FaaRegistrantRegion?
+  registrant_county_code  Int?
+  registrant_country_code String?
+  last_action_date        DateTime             @db.Date
+  cert_issue_date         DateTime             @db.Date
+  cert_details            String
+  aircraft_type           FaaAircraftType
+  engine_type             FaaEngineType
+  status_code             String
+  // stored as base-10
+  mode_s_code             Int                  @unique
+  fractional_ownership    Boolean
+  air_worth_date          DateTime?            @db.Date
+  other_registrant_name_1 String?
+  other_registrant_name_2 String?
+  other_registrant_name_3 String?
+  other_registrant_name_4 String?
+  other_registrant_name_5 String?
+  expiration_date         DateTime             @db.Date
+  unique_id               Int                  @id
+  kit_mfr                 String?
+  kit_model               String?
+  // stored as base-16
+  mode_s_code_hex         String               @unique
+
+  aircraft_info FaaAircraftInfo @relation(fields: [mft_mdl_code], references: [code])
+  engine_info   FaaEngineInfo?  @relation(fields: [eng_mfr_mdl], references: [code])
+}
+
+enum FaaAircraftCategoryCode {
+  LAND // 1
+  SEA // 2
+  AMPHIBIAN // 3
+}
+
+enum FaaBuilderCertificationCode {
+  TYPE_CERTIFIED // 0
+  NOT_TYPE_CERTIFIED // 1
+  LIGHT_SPORT // 2
+}
+
+enum FaaAircraftWeightClass {
+  CLASS_1 // 1
+  CLASS_2 // 2
+  CLASS_3 // 3
+  CLASS_4 // 4
+}
+
+model FaaAircraftInfo {
+  code                   String                      @id
+  mfr                    String
+  model                  String                      @unique
+  aircraft_type          FaaAircraftType
+  engine_type            FaaEngineType
+  aircraft_cat_code      FaaAircraftCategoryCode
+  builder_cert_code      FaaBuilderCertificationCode
+  engine_count           Int
+  seat_count             Int
+  weight_class           FaaAircraftWeightClass
+  // in mph
+  avg_cruising_speed     Int?
+  tc_data_sheet          String?
+  tc_data_holder         String?
+  aircraft_registrations FaaAircraftRegistration[]
+}
+
+model FaaEngineInfo {
+  code                   String                    @id
+  mfr                    String
+  model                  String                    @unique
+  type                   FaaEngineType?
+  // for engine types 1, 2, 3, 7, 8
+  horsepower             Int?
+  // for engine types 4, 5, 6
+  lbs_of_thrust          Int?
+  aircraft_registrations FaaAircraftRegistration[]
 }
