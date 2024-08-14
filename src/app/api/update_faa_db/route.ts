@@ -3,6 +3,8 @@ import AdmZip from "adm-zip";
 import { Stream } from "stream";
 import csvParser from "csv-parser";
 import faa_sample_data from "../../../sample_faa_data";
+import { AircraftRegistrationRawInfo } from "@/lib/types";
+import saveFaaRegistrationData from "@/lib/faa_registration";
 
 export async function GET(request: NextRequest) {
   // verify that the request is coming from the vercel cron job and not a random person
@@ -46,15 +48,16 @@ export async function GET(request: NextRequest) {
   readable.push(csv_buffer);
   readable.push(null);
 
-  const aircraft_registration_data: any[] = [];
+  const aircraft_registration_data: AircraftRegistrationRawInfo[] = [];
 
   readable
     .pipe(csvParser())
     .on("data", (row) => {
       aircraft_registration_data.push(row);
     })
-    .on("end", () => {
-      console.log(aircraft_registration_data);
+    .on("end", async () => {
+      // saved to database
+      await saveFaaRegistrationData(aircraft_registration_data);
     });
 
   return Response.json({ success: true });
