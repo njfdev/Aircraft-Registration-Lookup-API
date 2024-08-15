@@ -84,7 +84,7 @@ model FaaAircraftRegistration {
   registrant_county_code  Int?
   registrant_country_code String?
   last_action_date        DateTime             @db.Date
-  cert_issue_date         DateTime             @db.Date
+  cert_issue_date         DateTime?            @db.Date
   cert_details            String
   aircraft_type           FaaAircraftType
   engine_type             FaaEngineType
