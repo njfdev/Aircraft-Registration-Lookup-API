@@ -69,7 +69,7 @@ enum FaaEngineType {
 
 model FaaAircraftRegistration {
   n_number                String               @unique
-  serial_number           String               @unique
+  serial_number           String
   mft_mdl_code            String
   eng_mfr_mdl             String?
   year_mfr                Int?
