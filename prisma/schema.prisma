@@ -105,8 +105,8 @@ model FaaAircraftRegistration {
   // stored as base-16
   mode_s_code_hex         String               @unique
 
-  aircraft_info FaaAircraftInfo @relation(fields: [mft_mdl_code], references: [code])
-  engine_info   FaaEngineInfo?  @relation(fields: [eng_mfr_mdl], references: [code])
+  aircraft_info FaaAircraftInfo @relation(fields: [mft_mdl_code], references: [code], onDelete: Cascade)
+  engine_info   FaaEngineInfo?  @relation(fields: [eng_mfr_mdl], references: [code], onDelete: Cascade)
 }
 
 enum FaaAircraftCategoryCode {
