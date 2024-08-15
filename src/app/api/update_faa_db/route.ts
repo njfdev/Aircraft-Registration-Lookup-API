@@ -4,7 +4,11 @@ import { Stream } from "stream";
 import csvParser from "csv-parser";
 import faa_sample_data from "../../../sample_faa_data";
 import { AircraftRegistrationRawInfo } from "@/lib/types";
-import saveFaaRegistrationData from "@/lib/faa_registration";
+import {
+  parseRawFaaRegistration,
+  saveFaaRegistrationData,
+} from "@/lib/faa_registration";
+import { FaaAircraftRegistration } from "@prisma/client";
 
 export async function GET(request: NextRequest) {
   // verify that the request is coming from the vercel cron job and not a random person
@@ -48,12 +52,14 @@ export async function GET(request: NextRequest) {
   readable.push(csv_buffer);
   readable.push(null);
 
-  const aircraft_registration_data: AircraftRegistrationRawInfo[] = [];
+  const aircraft_registration_data: FaaAircraftRegistration[] = [];
 
   readable
     .pipe(csvParser())
     .on("data", (row) => {
-      aircraft_registration_data.push(row);
+      try {
+        aircraft_registration_data.push(parseRawFaaRegistration(row));
+      } catch {}
     })
     .on("end", async () => {
       // saved to database

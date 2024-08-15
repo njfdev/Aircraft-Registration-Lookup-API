@@ -10,9 +10,19 @@ import { AircraftRegistrationRawInfo } from "./types";
 import parse8CharDate from "./utils";
 
 export async function saveFaaRegistrationData(
-  registration_data: AircraftRegistrationRawInfo[]
+  registration_data: FaaAircraftRegistration[]
 ) {
   const prisma = new PrismaClient();
+
+  const deleteResult = await prisma.faaAircraftRegistration.deleteMany();
+
+  console.log(`Prisma Delete FAA Registration Result: ${deleteResult}`);
+
+  const createResult = await prisma.faaAircraftRegistration.createMany({
+    data: registration_data,
+  });
+
+  console.log(`Prisma Create Many FAA Registration Result: ${createResult}`);
 
   await prisma.$disconnect();
 }
