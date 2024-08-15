@@ -5,12 +5,17 @@ import {
   FaaAircraftType,
   FaaAircraftWeightClass,
   FaaBuilderCertificationCode,
+  FaaEngineInfo,
   FaaEngineType,
   FaaRegistrantRegion,
   FaaRegistrantType,
   PrismaClient,
 } from "@prisma/client";
-import { AircraftRawInfo, AircraftRegistrationRawInfo } from "./types";
+import {
+  AircraftRawInfo,
+  AircraftRegistrationRawInfo,
+  EngineRawInfo,
+} from "./types";
 import parse8CharDate from "./utils";
 
 export async function saveFaaRegistrationData(
@@ -47,6 +52,22 @@ export async function saveFaaAircraftData(aircraft_data: FaaAircraftInfo[]) {
   await prisma.$disconnect();
 }
 
+export async function saveFaaEngineData(engine_data: FaaEngineInfo[]) {
+  const prisma = new PrismaClient();
+
+  const deleteResult = await prisma.faaEngineInfo.deleteMany();
+
+  console.log(`Prisma Delete FAA Engine Info Result: ${deleteResult}`);
+
+  const createResult = await prisma.faaEngineInfo.createMany({
+    data: engine_data,
+  });
+
+  console.log(`Prisma Create Many FAA Engine Info Result: ${createResult}`);
+
+  await prisma.$disconnect();
+}
+
 export function parseRawFaaAircraft(
   raw_aircraft: AircraftRawInfo
 ): FaaAircraftInfo {
@@ -66,6 +87,17 @@ export function parseRawFaaAircraft(
     avg_cruising_speed: Number(raw_aircraft["SPEED"].trim()) || null,
     tc_data_sheet: raw_aircraft["TC-DATA-SHEET"].trim() || null,
     tc_data_holder: raw_aircraft["TC-DATA-HOLDER"].trim() || null,
+  };
+}
+
+export function parseRawFaaEngine(raw_engine: EngineRawInfo): FaaEngineInfo {
+  return {
+    code: raw_engine["CODE"].trim(),
+    mfr: raw_engine["MFR"].trim(),
+    model: raw_engine["MODEL"].trim(),
+    type: mapEngineType(raw_engine["TYPE"]),
+    horsepower: Number(raw_engine["HORSEPOWER"].trim()) || null,
+    lbs_of_thrust: Number(raw_engine["THRUST"].trim()) || null,
   };
 }
 

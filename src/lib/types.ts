@@ -51,3 +51,12 @@ export interface AircraftRawInfo {
   "TC-DATA-SHEET": string;
   "TC-DATA-HOLDER": string;
 }
+
+export interface EngineRawInfo {
+  CODE: string;
+  MFR: string;
+  MODEL: string;
+  TYPE: string;
+  HORSEPOWER: string;
+  THRUST: string;
+}

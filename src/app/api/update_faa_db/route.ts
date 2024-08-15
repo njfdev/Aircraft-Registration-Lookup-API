@@ -2,15 +2,24 @@ import type { NextRequest } from "next/server";
 import AdmZip from "adm-zip";
 import { Stream } from "stream";
 import csvParser from "csv-parser";
-import faa_sample_data, { aircraftInfo } from "../../../sample_faa_data";
+import faa_sample_data, {
+  aircraftInfo,
+  engineInfo,
+} from "../../../sample_faa_data";
 import { AircraftRegistrationRawInfo } from "@/lib/types";
 import {
   parseRawFaaAircraft,
+  parseRawFaaEngine,
   parseRawFaaRegistration,
   saveFaaAircraftData,
+  saveFaaEngineData,
   saveFaaRegistrationData,
 } from "@/lib/faa_registration";
-import { FaaAircraftInfo, FaaAircraftRegistration } from "@prisma/client";
+import {
+  FaaAircraftInfo,
+  FaaAircraftRegistration,
+  FaaEngineInfo,
+} from "@prisma/client";
 
 export async function GET(request: NextRequest) {
   // verify that the request is coming from the vercel cron job and not a random person
@@ -48,47 +57,104 @@ export async function GET(request: NextRequest) {
   // let csv_buffer = registration_csv.getData();
   let aircraft_csv_buffer = Buffer.from(aircraftInfo);
 
-  // create a readable stream from the csv buffer
+  let engine_csv_buffer = Buffer.from(engineInfo);
+
+  let registration_csv_buffer = Buffer.from(faa_sample_data);
+
+  processCsvFiles(
+    aircraft_csv_buffer,
+    engine_csv_buffer,
+    registration_csv_buffer
+  );
+
+  return Response.json({ success: true });
+}
+
+function processCsvFiles(
+  aircraft_csv_buffer: Buffer,
+  engine_csv_buffer: Buffer,
+  registration_csv_buffer: Buffer
+) {
+  processAircraftCsv(aircraft_csv_buffer, async () => {
+    await processEngineCsv(engine_csv_buffer, async () => {
+      await processRegistrationCsv(registration_csv_buffer, async () => {
+        console.log("Finished updating database!");
+      });
+    });
+  });
+}
+
+function processAircraftCsv(
+  aircraft_csv_buffer: Buffer,
+  after_finish: () => Promise<void>
+) {
   const aircraft_readable = new Stream.Readable();
   aircraft_readable._read = () => {};
-  aircraft_readable.push(aircraft_readable);
+  aircraft_readable.push(aircraft_csv_buffer);
   aircraft_readable.push(null);
 
-  const aircraft_data: FaaAircraftInfo[] = [];
+  let aircraft_data: FaaAircraftInfo[] = [];
 
   aircraft_readable
     .pipe(csvParser())
     .on("data", (row) => {
       try {
-        aircraft_readable.push(parseRawFaaAircraft(row));
+        aircraft_data.push(parseRawFaaAircraft(row));
       } catch {}
     })
     .on("end", async () => {
       // saved to database
       await saveFaaAircraftData(aircraft_data);
+      await after_finish();
     });
+}
 
-  let csv_buffer = Buffer.from(faa_sample_data);
+function processEngineCsv(
+  engine_csv_buffer: Buffer,
+  after_finish: () => Promise<void>
+) {
+  const engine_readable = new Stream.Readable();
+  engine_readable._read = () => {};
+  engine_readable.push(engine_csv_buffer);
+  engine_readable.push(null);
 
-  // create a readable stream from the csv buffer
-  const readable = new Stream.Readable();
-  readable._read = () => {};
-  readable.push(csv_buffer);
-  readable.push(null);
+  let engine_data: FaaEngineInfo[] = [];
 
-  const aircraft_registration_data: FaaAircraftRegistration[] = [];
-
-  readable
+  engine_readable
     .pipe(csvParser())
     .on("data", (row) => {
       try {
-        aircraft_registration_data.push(parseRawFaaRegistration(row));
+        engine_data.push(parseRawFaaEngine(row));
       } catch {}
     })
     .on("end", async () => {
       // saved to database
-      await saveFaaRegistrationData(aircraft_registration_data);
+      await saveFaaEngineData(engine_data);
+      await after_finish();
     });
+}
 
-  return Response.json({ success: true });
+function processRegistrationCsv(
+  registration_csv_buffer: Buffer,
+  after_finish: () => Promise<void>
+) {
+  const registration_readable = new Stream.Readable();
+  registration_readable._read = () => {};
+  registration_readable.push(registration_csv_buffer);
+  registration_readable.push(null);
+
+  let registration_data: FaaAircraftRegistration[] = [];
+
+  registration_readable
+    .pipe(csvParser())
+    .on("data", (row) => {
+      try {
+        registration_data.push(parseRawFaaRegistration(row));
+      } catch {}
+    })
+    .on("end", async () => {
+      // saved to database
+      await saveFaaRegistrationData(registration_data);
+      await after_finish();
+    });
 }
