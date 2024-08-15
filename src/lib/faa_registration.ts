@@ -25,13 +25,33 @@ export async function saveFaaRegistrationData(
 
   const deleteResult = await prisma.faaAircraftRegistration.deleteMany();
 
-  console.log(`Prisma Delete FAA Registration Result: ${deleteResult}`);
+  console.log(
+    `Prisma Delete FAA Registration Result: ${JSON.stringify(deleteResult)}`
+  );
 
-  const createResult = await prisma.faaAircraftRegistration.createMany({
-    data: registration_data,
-  });
+  let new_records = 0;
 
-  console.log(`Prisma Create Many FAA Registration Result: ${createResult}`);
+  for (const registration of registration_data) {
+    try {
+      await prisma.faaAircraftRegistration.create({
+        data: registration,
+      });
+      new_records++;
+    } catch (error: any) {
+      console.error(
+        "Failed to create item:",
+        registration,
+        "Error:",
+        error.message
+      );
+    }
+  }
+
+  console.log(
+    `Prisma Create Many FAA Registration Result: ${JSON.stringify({
+      count: new_records,
+    })}`
+  );
 
   await prisma.$disconnect();
 }
@@ -41,13 +61,19 @@ export async function saveFaaAircraftData(aircraft_data: FaaAircraftInfo[]) {
 
   const deleteResult = await prisma.faaAircraftInfo.deleteMany();
 
-  console.log(`Prisma Delete FAA Aircraft Info Result: ${deleteResult}`);
+  console.log(
+    `Prisma Delete FAA Aircraft Info Result: ${JSON.stringify(deleteResult)}`
+  );
 
   const createResult = await prisma.faaAircraftInfo.createMany({
     data: aircraft_data,
   });
 
-  console.log(`Prisma Create Many FAA Aircraft Info Result: ${createResult}`);
+  console.log(
+    `Prisma Create Many FAA Aircraft Info Result: ${JSON.stringify(
+      createResult
+    )}`
+  );
 
   await prisma.$disconnect();
 }
@@ -57,13 +83,17 @@ export async function saveFaaEngineData(engine_data: FaaEngineInfo[]) {
 
   const deleteResult = await prisma.faaEngineInfo.deleteMany();
 
-  console.log(`Prisma Delete FAA Engine Info Result: ${deleteResult}`);
+  console.log(
+    `Prisma Delete FAA Engine Info Result: ${JSON.stringify(deleteResult)}`
+  );
 
   const createResult = await prisma.faaEngineInfo.createMany({
     data: engine_data,
   });
 
-  console.log(`Prisma Create Many FAA Engine Info Result: ${createResult}`);
+  console.log(
+    `Prisma Create Many FAA Engine Info Result: ${JSON.stringify(createResult)}`
+  );
 
   await prisma.$disconnect();
 }
