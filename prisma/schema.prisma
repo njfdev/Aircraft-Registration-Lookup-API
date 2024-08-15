@@ -131,7 +131,7 @@ enum FaaAircraftWeightClass {
 model FaaAircraftInfo {
   code                   String                      @id
   mfr                    String
-  model                  String                      @unique
+  model                  String
   aircraft_type          FaaAircraftType
   engine_type            FaaEngineType
   aircraft_cat_code      FaaAircraftCategoryCode
@@ -149,7 +149,7 @@ model FaaAircraftInfo {
 model FaaEngineInfo {
   code                   String                    @id
   mfr                    String
-  model                  String                    @unique
+  model                  String
   type                   FaaEngineType?
   // for engine types 1, 2, 3, 7, 8
   horsepower             Int?
