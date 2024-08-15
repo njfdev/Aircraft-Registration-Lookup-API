@@ -1,12 +1,16 @@
 import {
+  FaaAircraftCategoryCode,
+  FaaAircraftInfo,
   FaaAircraftRegistration,
   FaaAircraftType,
+  FaaAircraftWeightClass,
+  FaaBuilderCertificationCode,
   FaaEngineType,
   FaaRegistrantRegion,
   FaaRegistrantType,
   PrismaClient,
 } from "@prisma/client";
-import { AircraftRegistrationRawInfo } from "./types";
+import { AircraftRawInfo, AircraftRegistrationRawInfo } from "./types";
 import parse8CharDate from "./utils";
 
 export async function saveFaaRegistrationData(
@@ -25,6 +29,44 @@ export async function saveFaaRegistrationData(
   console.log(`Prisma Create Many FAA Registration Result: ${createResult}`);
 
   await prisma.$disconnect();
+}
+
+export async function saveFaaAircraftData(aircraft_data: FaaAircraftInfo[]) {
+  const prisma = new PrismaClient();
+
+  const deleteResult = await prisma.faaAircraftInfo.deleteMany();
+
+  console.log(`Prisma Delete FAA Aircraft Info Result: ${deleteResult}`);
+
+  const createResult = await prisma.faaAircraftInfo.createMany({
+    data: aircraft_data,
+  });
+
+  console.log(`Prisma Create Many FAA Aircraft Info Result: ${createResult}`);
+
+  await prisma.$disconnect();
+}
+
+export function parseRawFaaAircraft(
+  raw_aircraft: AircraftRawInfo
+): FaaAircraftInfo {
+  return {
+    code: raw_aircraft["CODE"].trim(),
+    mfr: raw_aircraft["MFR"].trim(),
+    model: raw_aircraft["MODEL"].trim(),
+    aircraft_type: mapAircraftType(raw_aircraft["TYPE-ACFT"]),
+    engine_type: mapEngineType(raw_aircraft["TYPE-ENG"]),
+    aircraft_cat_code: mapAircraftCategoryCode(raw_aircraft["AC-CAT"])!,
+    builder_cert_code: mapBuilderCertificationCode(
+      raw_aircraft["BUILD-CERT-IND"]
+    )!,
+    engine_count: Number(raw_aircraft["NO-ENG"].trim()),
+    seat_count: Number(raw_aircraft["NO-SEATS"].trim()),
+    weight_class: mapAircraftWeightClass(raw_aircraft["AC-WEIGHT"])!,
+    avg_cruising_speed: Number(raw_aircraft["SPEED"].trim()) || null,
+    tc_data_sheet: raw_aircraft["TC-DATA-SHEET"].trim() || null,
+    tc_data_holder: raw_aircraft["TC-DATA-HOLDER"].trim() || null,
+  };
 }
 
 export function parseRawFaaRegistration(
@@ -182,5 +224,50 @@ function mapEngineType(value: string): FaaEngineType {
       return FaaEngineType.ROTARY;
     default:
       return FaaEngineType.UNKNOWN;
+  }
+}
+
+function mapAircraftCategoryCode(
+  value: string
+): FaaAircraftCategoryCode | null {
+  switch (value) {
+    case "1":
+      return FaaAircraftCategoryCode.LAND;
+    case "2":
+      return FaaAircraftCategoryCode.SEA;
+    case "3":
+      return FaaAircraftCategoryCode.AMPHIBIAN;
+    default:
+      return null;
+  }
+}
+
+function mapBuilderCertificationCode(
+  value: string
+): FaaBuilderCertificationCode | null {
+  switch (value) {
+    case "0":
+      return FaaBuilderCertificationCode.TYPE_CERTIFIED;
+    case "1":
+      return FaaBuilderCertificationCode.NOT_TYPE_CERTIFIED;
+    case "2":
+      return FaaBuilderCertificationCode.LIGHT_SPORT;
+    default:
+      return null;
+  }
+}
+
+function mapAircraftWeightClass(value: string): FaaAircraftWeightClass | null {
+  switch (value) {
+    case "CLASS 1":
+      return FaaAircraftWeightClass.CLASS_1;
+    case "CLASS 2":
+      return FaaAircraftWeightClass.CLASS_2;
+    case "CLASS 3":
+      return FaaAircraftWeightClass.CLASS_3;
+    case "CLASS 4":
+      return FaaAircraftWeightClass.CLASS_4;
+    default:
+      return null;
   }
 }

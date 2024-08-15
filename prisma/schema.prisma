@@ -122,10 +122,10 @@ enum FaaBuilderCertificationCode {
 }
 
 enum FaaAircraftWeightClass {
-  CLASS_1 // 1
-  CLASS_2 // 2
-  CLASS_3 // 3
-  CLASS_4 // 4
+  CLASS_1 // CLASS 1
+  CLASS_2 // CLASS 2
+  CLASS_3 // CLASS 3
+  CLASS_4 // CLASS 4
 }
 
 model FaaAircraftInfo {

@@ -2,13 +2,15 @@ import type { NextRequest } from "next/server";
 import AdmZip from "adm-zip";
 import { Stream } from "stream";
 import csvParser from "csv-parser";
-import faa_sample_data from "../../../sample_faa_data";
+import faa_sample_data, { aircraftInfo } from "../../../sample_faa_data";
 import { AircraftRegistrationRawInfo } from "@/lib/types";
 import {
+  parseRawFaaAircraft,
   parseRawFaaRegistration,
+  saveFaaAircraftData,
   saveFaaRegistrationData,
 } from "@/lib/faa_registration";
-import { FaaAircraftRegistration } from "@prisma/client";
+import { FaaAircraftInfo, FaaAircraftRegistration } from "@prisma/client";
 
 export async function GET(request: NextRequest) {
   // verify that the request is coming from the vercel cron job and not a random person
@@ -44,6 +46,28 @@ export async function GET(request: NextRequest) {
   // }
   //
   // let csv_buffer = registration_csv.getData();
+  let aircraft_csv_buffer = Buffer.from(aircraftInfo);
+
+  // create a readable stream from the csv buffer
+  const aircraft_readable = new Stream.Readable();
+  aircraft_readable._read = () => {};
+  aircraft_readable.push(aircraft_readable);
+  aircraft_readable.push(null);
+
+  const aircraft_data: FaaAircraftInfo[] = [];
+
+  aircraft_readable
+    .pipe(csvParser())
+    .on("data", (row) => {
+      try {
+        aircraft_readable.push(parseRawFaaAircraft(row));
+      } catch {}
+    })
+    .on("end", async () => {
+      // saved to database
+      await saveFaaAircraftData(aircraft_data);
+    });
+
   let csv_buffer = Buffer.from(faa_sample_data);
 
   // create a readable stream from the csv buffer

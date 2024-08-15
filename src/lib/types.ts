@@ -35,3 +35,19 @@ export interface AircraftRegistrationRawInfo {
   "MODE S CODE HEX": string;
   "": string;
 }
+
+export interface AircraftRawInfo {
+  CODE: string;
+  MFR: string;
+  MODEL: string;
+  "TYPE-ACFT": string;
+  "TYPE-ENG": string;
+  "AC-CAT": string;
+  "BUILD-CERT-IND": string;
+  "NO-ENG": string;
+  "NO-SEATS": string;
+  "AC-WEIGHT": string;
+  SPEED: string;
+  "TC-DATA-SHEET": string;
+  "TC-DATA-HOLDER": string;
+}
