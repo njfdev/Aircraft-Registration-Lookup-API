@@ -17,7 +17,7 @@ datasource db {
 enum FaaRegistrantType {
   INDIVIDUAL // 1
   PARTNERSHIP // 2
-  CORPORTATION // 3
+  CORPORATATION // 3
   CO_OWNED // 4
   GOVERNMENT // 5
   LLC // 7
