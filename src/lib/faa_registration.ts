@@ -29,28 +29,16 @@ export async function saveFaaRegistrationData(
     `Prisma Delete FAA Registration Result: ${JSON.stringify(deleteResult)}`
   );
 
-  let new_records = 0;
-
-  for (const registration of registration_data) {
-    try {
-      await prisma.faaAircraftRegistration.create({
-        data: registration,
-      });
-      new_records++;
-    } catch (error: any) {
-      console.error(
-        "Failed to create item:",
-        registration,
-        "Error:",
-        error.message
-      );
-    }
-  }
+  const createResult = await prisma.faaAircraftRegistration.createMany({
+    data: registration_data,
+    // ignore any conflicts
+    skipDuplicates: true,
+  });
 
   console.log(
-    `Prisma Create Many FAA Registration Result: ${JSON.stringify({
-      count: new_records,
-    })}`
+    `Prisma Create Many FAA Aircraft Info Result: ${JSON.stringify(
+      createResult
+    )}`
   );
 
   await prisma.$disconnect();
