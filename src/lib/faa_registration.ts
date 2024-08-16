@@ -174,7 +174,7 @@ export function parseRawFaaRegistration(
     )!,
     unique_id: Number(raw_registration["UNIQUE ID"].trim())!,
     kit_mfr: raw_registration["KIT MFR"].trim() || null,
-    kit_model: raw_registration[" KIT MODEL"].trim() || null,
+    kit_model: raw_registration["KIT MODEL"].trim() || null,
     mode_s_code_hex: raw_registration["MODE S CODE HEX"].trim(),
   };
 }

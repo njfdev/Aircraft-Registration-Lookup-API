@@ -78,13 +78,23 @@ async function processCsvData<RawType, DataType>(
     let data: DataType[] = [];
 
     readable
-      .pipe(csvParser())
+      /* After a lot of pain, I figured out that the headers can contains zero
+       * width special characters. This means even if "CODE" and "CODE" look the
+       * same, they might not be due to these zero-width characters. This
+       * mapHeaders function trims the header to remove these special characters.
+       */
+      .pipe(
+        csvParser({
+          mapHeaders: ({ header, index }) => header.trim(),
+          quote: undefined,
+        })
+      )
       .on("data", (row) => {
         try {
           data.push(parsing_function(row as RawType));
         } catch (error: any) {
           if (error.message.trim()) {
-            console.error(error);
+            console.error(error, row);
           }
         }
       })

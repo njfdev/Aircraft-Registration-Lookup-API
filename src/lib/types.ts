@@ -31,9 +31,8 @@ export interface AircraftRegistrationRawInfo {
   "EXPIRATION DATE": string;
   "UNIQUE ID": string;
   "KIT MFR": string;
-  " KIT MODEL": string;
+  "KIT MODEL": string;
   "MODE S CODE HEX": string;
-  "": string;
 }
 
 export interface AircraftRawInfo {
