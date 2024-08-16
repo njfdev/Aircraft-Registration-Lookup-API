@@ -11,7 +11,18 @@ export async function GET(
     where: {
       n_number,
     },
+    include: {
+      aircraft_info: true,
+      engine_info: true,
+    },
   });
+
+  if (!registration_result) {
+    return Response.json({
+      error: "not_found",
+      message: "Could not find registration data for the specified N-Number.",
+    });
+  }
 
   return Response.json({ registration_result });
 }
