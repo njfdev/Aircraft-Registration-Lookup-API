@@ -35,4 +35,4 @@ jobs:
         run: yarn prisma migrate deploy
 
       - name: Run FAA Registration Update Script
-        run: yarn ./src/lib/update_faa_data.ts
+        run: yarn tsx ./src/lib/update_faa_data.ts
