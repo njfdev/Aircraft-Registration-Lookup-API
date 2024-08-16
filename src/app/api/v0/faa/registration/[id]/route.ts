@@ -17,7 +17,7 @@ export async function GET(
         mode_s_code_hex: idUpper,
       };
 
-  const registration_result = await prisma.faaAircraftRegistration.findUnique({
+  const registration = await prisma.faaAircraftRegistration.findUnique({
     where: findParams,
     include: {
       aircraft_info: true,
@@ -25,7 +25,7 @@ export async function GET(
     },
   });
 
-  if (!registration_result) {
+  if (!registration) {
     return Response.json({
       error: "not_found",
       message: `Could not find registration data for the specified ${
@@ -34,5 +34,5 @@ export async function GET(
     });
   }
 
-  return Response.json({ registration_result });
+  return Response.json({ registration });
 }
