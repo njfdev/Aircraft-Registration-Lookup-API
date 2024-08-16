@@ -1,0 +1,37 @@
+name: Daily FAA Databse Update
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    # Run every day at 12:00am central time (5:00am UTC). The FAA csv files,
+    # are updated at 11:30am central time, so there is 30 minutes of buffer.
+    - cron: "0 5 * * *"
+
+jobs:
+  update-database:
+    runs-on: ubuntu-latest
+
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      DIRECT_URL: ${{ secrets.DIRECT_URL }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "latest"
+          cache: "yarn"
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Apply All Pending Prisma Migrations to the Database
+        run: yarn prisma migrate deploy
+
+      - name: Run FAA Registration Update Script
+        run: yarn ./src/lib/update_faa_data.ts
