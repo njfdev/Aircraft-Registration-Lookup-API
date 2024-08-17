@@ -16,11 +16,25 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import useHash from "@/lib/routing/utils";
 import { MAX_FREE_REQUESTS_PER_MINUTE } from "@/lib/types";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function DocsPage() {
+  const hash = useHash();
+  const [openObjectAccordions, setOpenObjectAccordions] = useState<string[]>(
+    []
+  );
+
+  useEffect(() => {
+    if (hash && !openObjectAccordions.includes(hash)) {
+      console.log(openObjectAccordions);
+      setOpenObjectAccordions((old) => [...old, hash.substring(1)]);
+    }
+  }, [hash]);
+
   return (
     <main className="flex flex-col max-w-[42rem] mx-auto mt-4">
       <h1 className="text-3xl font-bold mb-1">Documentation</h1>
@@ -73,7 +87,7 @@ export default function DocsPage() {
         parameter, a random one will be returned. All parameters are NOT
         case-sensitive.
       </p>
-      <Accordion type="multiple" collapsible>
+      <Accordion type="multiple">
         <AccordionItem value="faa-registration">
           <AccordionTrigger>/faa/registration</AccordionTrigger>
           <AccordionContent className="flex flex-col gap-2 text-base">
@@ -103,7 +117,7 @@ export default function DocsPage() {
               &#123;{"\n"}
               {"  "}&quot;registration&quot;:{" "}
               <Link
-                href=""
+                href="#reg-obj-info"
                 className="underline hover:opacity-80 active:opacity-65"
               >
                 RegistrationObject
@@ -134,7 +148,7 @@ export default function DocsPage() {
               model of any aircraft. Many registrations can point to the same
               aircraft model code. This parameter can be found in the{" "}
               <Link
-                href=""
+                href="#reg-obj-info"
                 className="underline hover:opacity-80 active:opacity-65"
               >
                 aircraft registration object
@@ -146,7 +160,7 @@ export default function DocsPage() {
               &#123;{"\n"}
               {"  "}&quot;aircraft_info&quot;:{" "}
               <Link
-                href=""
+                href="#acft-mdl-info"
                 className="underline hover:opacity-80 active:opacity-65"
               >
                 AircraftModelObject
@@ -177,7 +191,7 @@ export default function DocsPage() {
               model of any engine. Many registrations can have the same engine
               model code. This parameter can be found in the{" "}
               <Link
-                href=""
+                href="#reg-obj-info"
                 className="underline hover:opacity-80 active:opacity-65"
               >
                 aircraft registration object
@@ -189,7 +203,7 @@ export default function DocsPage() {
               &#123;{"\n"}
               {"  "}&quot;engine_info&quot;:{" "}
               <Link
-                href=""
+                href="#eng-mdl-info"
                 className="underline hover:opacity-80 active:opacity-65"
               >
                 EngineModelObject
@@ -205,6 +219,26 @@ export default function DocsPage() {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
+      <h2 className="mt-4 text-2xl font-bold">API Object Types</h2>
+      <Accordion
+        type="multiple"
+        value={openObjectAccordions}
+        onValueChange={(values) => setOpenObjectAccordions(values)}
+      >
+        <AccordionItem value="reg-obj-info" id="reg-obj-info">
+          <AccordionTrigger>RegistrationObject</AccordionTrigger>
+          <AccordionContent className="flex flex-col gap-2 text-base"></AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="acft-mdl-info" id="acft-mdl-info">
+          <AccordionTrigger>AircraftModelObject</AccordionTrigger>
+          <AccordionContent className="flex flex-col gap-2 text-base"></AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="eng-mdl-info" id="eng-mdl-info">
+          <AccordionTrigger>EngineModelObject</AccordionTrigger>
+          <AccordionContent className="flex flex-col gap-2 text-base"></AccordionContent>
+        </AccordionItem>
+      </Accordion>
+      <h2></h2>
     </main>
   );
 }
