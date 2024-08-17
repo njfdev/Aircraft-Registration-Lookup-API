@@ -1,6 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import { NextRequest } from "next/server";
 
+// revalidate every hour
+export const revalidate = 60 * 60;
+
 export async function GET(
   req: NextRequest,
   { params: { id } }: { params: { id: string } }
