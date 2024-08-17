@@ -81,6 +81,47 @@ export default function DocsPage() {
           .
         </TableCaption>
       </Table>
+      <h2 className="mt-4 text-2xl font-bold">Errors</h2>
+      <p>
+        In the case of an error, the API route will return an object with an{" "}
+        <code>error</code> and <code>message</code> for that error. The endpoint
+        will also return a non-200 status code. Here are the possible error
+        codes:
+      </p>
+      <Table className="mt-1">
+        <TableHeader>
+          <TableRow>
+            <TableHead>Error Code</TableHead>
+            <TableHead>Status Code</TableHead>
+            <TableHead>Meaning</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>not_found</TableCell>
+            <TableCell>404</TableCell>
+            <TableCell>
+              The requested object could not be found. The <code>message</code>{" "}
+              parameter will contain a user friendly error message.
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>rate_limit</TableCell>
+            <TableCell>429</TableCell>
+            <TableCell>
+              You are sending too many requests and have hit the rate limit.
+              Wait 60 seconds before resuming.
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+      <h3 className="mt-2 mb-1 text-xl font-semibold">Example</h3>
+      <pre className="rounded p-4 dark:bg-stone-900 bg-stone-100">
+        {`{
+  error: "not_found",
+  message: "Could not find an engine for the specified model code."
+}`}
+      </pre>
       <h2 className="mt-4 text-2xl font-bold">API Routes</h2>
       <p>
         The API consists of only 3 endpoints. All endpoints listed here must be
