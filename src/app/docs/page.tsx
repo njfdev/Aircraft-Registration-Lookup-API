@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/table";
 import useHash from "@/lib/routing/utils";
 import { MAX_FREE_REQUESTS_PER_MINUTE } from "@/lib/types";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -768,24 +768,31 @@ function TryYourselfAPIBlock({
   parameters: string[];
 }) {
   const [currentResult, setCurrentResult] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [currentApiPath, setCurrentApiPath] = useState("");
 
   return (
     <div className="flex flex-col gap-1">
       <div className="flex sm:flex-row flex-col gap-1 w-full *:grow">
         {parameters.map((parameter) => {
+          const requestPath = `/api/v0${endpoint}/${parameter}`;
           return (
             <Button
               onClick={async () => {
-                const requestPath = `/api/v0${endpoint}/${parameter}`;
                 setCurrentApiPath(requestPath);
+                setIsLoading(true);
                 const apiResult = await fetch(requestPath);
                 setCurrentResult(
                   JSON.stringify(await apiResult.json()!, undefined, "  ")
                 );
+                setIsLoading(false);
               }}
               key={parameter}
+              disabled={isLoading}
             >
+              {isLoading && currentApiPath == requestPath && (
+                <Loader2 className="mr-2 animate-spin" />
+              )}
               {endpoint}
               {parameter && `/${parameter}`}
             </Button>
