@@ -16,6 +16,7 @@ import {
   FaaAircraftInfo,
   FaaAircraftRegistration,
   FaaEngineInfo,
+  PrismaClient,
 } from "@prisma/client";
 import { pipeline } from "stream/promises";
 import { AnyMxRecord } from "dns";
@@ -33,8 +34,11 @@ export async function update_faa_data() {
     Buffer.from(await zip_download_res.arrayBuffer())
   );
 
+  const prisma = new PrismaClient();
+
   const aircraft_csv_buffer = getFileFromFaaZip(zip_object, "ACFTREF.txt");
   await processCsvData(
+    prisma,
     aircraft_csv_buffer,
     parseRawFaaAircraft,
     saveFaaAircraftData
@@ -42,16 +46,24 @@ export async function update_faa_data() {
   console.log("Finished processing Aircraft Reference data");
 
   const engine_csv_buffer = getFileFromFaaZip(zip_object, "ENGINE.txt");
-  await processCsvData(engine_csv_buffer, parseRawFaaEngine, saveFaaEngineData);
+  await processCsvData(
+    prisma,
+    engine_csv_buffer,
+    parseRawFaaEngine,
+    saveFaaEngineData
+  );
   console.log("Finished processing Engine Reference data");
 
   const registration_csv_buffer = getFileFromFaaZip(zip_object, "MASTER.txt");
   await processCsvData(
+    prisma,
     registration_csv_buffer,
     parseRawFaaRegistration,
     saveFaaRegistrationData
   );
   console.log("Finished processing Aircraft Registration data");
+
+  prisma.$disconnect();
 
   return Response.json({ success: true });
 }
@@ -65,9 +77,10 @@ function getFileFromFaaZip(zip_object: AdmZip, filename: string): Buffer {
 }
 
 async function processCsvData<RawType, DataType>(
+  prisma: PrismaClient,
   csv_buffer: Buffer,
   parsing_function: (value: RawType) => DataType,
-  saving_function: (data: DataType[]) => Promise<void>
+  saving_function: (prisma: PrismaClient, data: DataType[]) => Promise<void>
 ) {
   return new Promise<void>((resolve, reject) => {
     const readable = new Stream.Readable();
@@ -101,7 +114,7 @@ async function processCsvData<RawType, DataType>(
       .on("end", async () => {
         try {
           // saved to database
-          await saving_function(data);
+          await saving_function(prisma, data);
           resolve();
         } catch (error) {
           reject(error);
