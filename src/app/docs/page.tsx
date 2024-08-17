@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/table";
 import useHash from "@/lib/routing/utils";
 import { MAX_FREE_REQUESTS_PER_MINUTE } from "@/lib/types";
+import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -227,7 +228,253 @@ export default function DocsPage() {
       >
         <AccordionItem value="reg-obj-info" id="reg-obj-info">
           <AccordionTrigger>RegistrationObject</AccordionTrigger>
-          <AccordionContent className="flex flex-col gap-2 text-base"></AccordionContent>
+          <AccordionContent className="flex flex-col gap-2 text-base">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Param Name</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Description</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>n_number</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>
+                    The N-Number FAA registration code assign to the aircraft
+                    without the &quot;N&quot; prefix.
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>serial_number</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>
+                    The complete serial number assigned by the manufacturer.
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>mft_mdl_code</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>
+                    A code assigned to the aircraft manufacturer, model, and
+                    series.
+                    <PDFExternalLink page={1} />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>eng_mft_mdl</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>
+                    A code assigned to the engine manufacturer and model.
+                    <PDFExternalLink page={1} />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>year_mfr</TableCell>
+                  <TableCell>number || null</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>registrant_type</TableCell>
+                  <TableCell>string || null</TableCell>
+                  <TableCell>
+                    An enum based on registration type. Possible values:{" "}
+                    <code>
+                      INDIVIDUAL, PARTNERSHIP, CORPORATATION, CO_OWNED,
+                      GOVERNMENT, LLC, NON_CITIZEN_CORPORATION,
+                      NON_CITIZEN_CO_OWNED
+                    </code>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>registrant_name</TableCell>
+                  <TableCell>string || null</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>registrant_street</TableCell>
+                  <TableCell>string || null</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>registrant_street2</TableCell>
+                  <TableCell>string || null</TableCell>
+                  <TableCell>This value is usually not filled out.</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>registrant_city</TableCell>
+                  <TableCell>string || null</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>registrant_state</TableCell>
+                  <TableCell>string || null</TableCell>
+                  <TableCell>
+                    The 2 letter code for the registrant's state.
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>registrant_zip_code</TableCell>
+                  <TableCell>string || null</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>registrant_region</TableCell>
+                  <TableCell>string || null</TableCell>
+                  <TableCell>
+                    An enum based on the registrant's region. Possible values:{" "}
+                    <code>
+                      EASTERN, SOUTHWESTERN, CENTRAL, WESTERN_PACIFIC, ALASKAN,
+                      SOUTHERN, EUROPEAN, GREAT_LAKES, NEW_ENGLAND,
+                      NORTHWEST_MOUNTAIN
+                    </code>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>registrant_county_code</TableCell>
+                  <TableCell>number || null</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>registrant_country_code</TableCell>
+                  <TableCell>string || null</TableCell>
+                  <TableCell>
+                    The 2 letter code for the registrant's country (usually
+                    &quot;US&quot;).
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>last_action_date</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>
+                    A date formatted as a string in the ISO 8601 format.
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>cert_issue_date</TableCell>
+                  <TableCell>string || null</TableCell>
+                  <TableCell>
+                    A date formatted as a string in the ISO 8601 format for when
+                    the certification was issued.
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>cert_details</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>
+                    A 10 character long string containing information about the
+                    type and uses of the certification requested.
+                    <PDFExternalLink page={2} />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>aircraft_type</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>
+                    An enum based on the aircraft type. Possible values:{" "}
+                    <code>
+                      GLIDER, BALLOON, BLIMP, FIXED_WING_SINGLE_ENGINE,
+                      FIXED_WING_MULTI_ENGINE, ROTORCRAFT, WEIGHT_SHIFT_CONTROL,
+                      POWERED_PARACHUTE, GYROPLANE, HYBRID_LIFT, OTHER
+                    </code>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>engine_type</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>
+                    An enum based on the engine type. Possible values:{" "}
+                    <code>
+                      NONE, RECIPROCATING, TURBO_PROP, TURBO_SHAFT, TURBO_JET,
+                      TURBO_FAN, RAMJET, TWO_CYCLE, FOUR_CYCLE, UNKNOWN,
+                      ELECTRIC, ROTARY
+                    </code>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>status_code</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>mode_s_code</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>fractional_ownership</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>air_worth_date</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>other_registrant_name_1</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>other_registrant_name_2</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>other_registrant_name_3</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>other_registrant_name_4</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>other_registrant_name_5</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>expiration_date</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>unique_id</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>kit_mfr</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>kit_model</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>mode_s_code_hex</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>aircraft_info</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>engine_info</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </AccordionContent>
         </AccordionItem>
         <AccordionItem value="acft-mdl-info" id="acft-mdl-info">
           <AccordionTrigger>AircraftModelObject</AccordionTrigger>
@@ -240,6 +487,20 @@ export default function DocsPage() {
       </Accordion>
       <h2></h2>
     </main>
+  );
+}
+
+function PDFExternalLink({ page }: { page: number }) {
+  return (
+    <Button variant="ghost" asChild className="p-0 h-max ml-1">
+      <Link
+        href={`https://registry.faa.gov/database/ardata.pdf#page=${page}`}
+        target="_blank"
+        className="underline hover:opacity-80 active:opacity-65"
+      >
+        <ExternalLink className="h-4 w-4" />
+      </Link>
+    </Button>
   );
 }
 
