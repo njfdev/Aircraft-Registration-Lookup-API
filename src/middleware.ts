@@ -22,8 +22,13 @@ export default async function middleware(request: NextRequest) {
   );
   return success
     ? NextResponse.next()
-    : NextResponse.json({
-        error: "rate_limit",
-        message: "Rate Limit Exceeded",
-      });
+    : NextResponse.json(
+        {
+          error: "rate_limit",
+          message: "Rate Limit Exceeded",
+        },
+        {
+          status: 429,
+        }
+      );
 }
