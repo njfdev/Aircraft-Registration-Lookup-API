@@ -7,20 +7,22 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center p-4 gap-4">
-      <div className="flex flex-col items-center mt-12">
-        <h1 className="font-bold text-7xl">arla</h1>
-        <h2 className="text-xl font-medium">
-          Aircraft Registration Lookup API
-        </h2>
-        <Button variant="secondary" asChild className="mt-8">
+    <main className="flex flex-col items-center gap-4">
+      <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center my-12">
+          <h1 className="font-bold text-7xl">arla</h1>
+          <h2 className="text-xl font-medium">
+            Aircraft Registration Lookup API
+          </h2>
+        </div>
+        <Button variant="secondary" asChild>
           <Link href="https://github.com/njfdev/Aircraft-Registration-Lookup-API">
             <Github className="mr-2 h-5 w-5" /> GitHub Repository
           </Link>
         </Button>
       </div>
       <Separator />
-      <div className="flex flex-col items-center w-full max-w-[42rem] text-justify gap-2">
+      <div className="flex flex-col w-full max-w-[42rem] text-justify gap-2">
         <p className="text-center text-lg font-semibold my-2">
           public api for aircraft registration
         </p>
@@ -70,6 +72,57 @@ export default function Home() {
             make an issue on GitHub
           </Link>{" "}
           so I can work on it!
+        </p>
+        <p>
+          Huge thanks to:
+          <ul className="ml-4 *:list-disc">
+            <li>
+              <Link
+                className="underline hover:opacity-80 active:opacity-65 transition-opacity"
+                href="https://vercel.com/"
+              >
+                Vercel
+              </Link>{" "}
+              - hosting this website and API for free!
+            </li>
+            <li>
+              <Link
+                className="underline hover:opacity-80 active:opacity-65 transition-opacity"
+                href="https://github.com/features/actions"
+              >
+                GitHub Actions
+              </Link>{" "}
+              - running the daily update script (~7 minutes of compute) for
+              free!
+            </li>
+            <li>
+              <Link
+                className="underline hover:opacity-80 active:opacity-65 transition-opacity"
+                href="https://supabase.com/"
+              >
+                Supabase
+              </Link>{" "}
+              - hosting the database for free!
+            </li>
+            <li>
+              <Link
+                className="underline hover:opacity-80 active:opacity-65 transition-opacity"
+                href="https://www.faa.gov/licenses_certificates/aircraft_certification/aircraft_registry/releasable_aircraft_download"
+              >
+                Federal Aviation Administration
+              </Link>{" "}
+              - providing aircraft registration information for free!
+            </li>
+            <li>
+              <Link
+                className="underline hover:opacity-80 active:opacity-65 transition-opacity"
+                href="https://www.adsbdb.com/"
+              >
+                adsbdb.com
+              </Link>{" "}
+              - inspiring this project!
+            </li>
+          </ul>
         </p>
       </div>
     </main>
