@@ -348,15 +348,16 @@ export default function DocsPage() {
                   <TableCell>last_action_date</TableCell>
                   <TableCell>string</TableCell>
                   <TableCell>
-                    A date formatted as a string in the ISO 8601 format.
+                    A date with no time component formatted as a string in the
+                    ISO 8601 format.
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>cert_issue_date</TableCell>
                   <TableCell>string || null</TableCell>
                   <TableCell>
-                    A date formatted as a string in the ISO 8601 format for when
-                    the certification was issued.
+                    A date with no time component formatted as a string in the
+                    ISO 8601 format for when the certification was issued.
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -395,81 +396,122 @@ export default function DocsPage() {
                 <TableRow>
                   <TableCell>status_code</TableCell>
                   <TableCell>string</TableCell>
-                  <TableCell></TableCell>
+                  <TableCell>
+                    A single character or number status code for the
+                    registration.
+                    <PDFExternalLink page={5} />
+                  </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>mode_s_code</TableCell>
-                  <TableCell>string</TableCell>
-                  <TableCell></TableCell>
+                  <TableCell>number</TableCell>
+                  <TableCell>
+                    The aircraft transponder code (can be found in ADS-B
+                    messages).
+                  </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>fractional_ownership</TableCell>
-                  <TableCell>string</TableCell>
-                  <TableCell></TableCell>
+                  <TableCell>boolean</TableCell>
+                  <TableCell>
+                    Whether the registration has fractional ownership or not.
+                  </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>air_worth_date</TableCell>
-                  <TableCell>string</TableCell>
-                  <TableCell></TableCell>
+                  <TableCell>string || null</TableCell>
+                  <TableCell>
+                    A date with no time component formatted as a string in the
+                    ISO 8601 format for when the aircraft had its airworthiness
+                    test.
+                  </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>other_registrant_name_1</TableCell>
-                  <TableCell>string</TableCell>
-                  <TableCell></TableCell>
+                  <TableCell>string || null</TableCell>
+                  <TableCell>This value is usually not filled out.</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>other_registrant_name_2</TableCell>
-                  <TableCell>string</TableCell>
-                  <TableCell></TableCell>
+                  <TableCell>string || null</TableCell>
+                  <TableCell>This value is usually not filled out.</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>other_registrant_name_3</TableCell>
-                  <TableCell>string</TableCell>
-                  <TableCell></TableCell>
+                  <TableCell>string || null</TableCell>
+                  <TableCell>This value is usually not filled out.</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>other_registrant_name_4</TableCell>
-                  <TableCell>string</TableCell>
-                  <TableCell></TableCell>
+                  <TableCell>string || null</TableCell>
+                  <TableCell>This value is usually not filled out.</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>other_registrant_name_5</TableCell>
-                  <TableCell>string</TableCell>
-                  <TableCell></TableCell>
+                  <TableCell>string || null</TableCell>
+                  <TableCell>This value is usually not filled out.</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>expiration_date</TableCell>
                   <TableCell>string</TableCell>
-                  <TableCell></TableCell>
+                  <TableCell>
+                    A date with no time component formatted as a string in the
+                    ISO 8601 format for when the registration expires.
+                  </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>unique_id</TableCell>
-                  <TableCell>string</TableCell>
-                  <TableCell></TableCell>
+                  <TableCell>number</TableCell>
+                  <TableCell>
+                    A unique identification number for the registration.
+                  </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>kit_mfr</TableCell>
-                  <TableCell>string</TableCell>
-                  <TableCell></TableCell>
+                  <TableCell>string || null</TableCell>
+                  <TableCell>
+                    This value is usually not filled out.
+                    <PDFExternalLink page={7} />
+                  </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>kit_model</TableCell>
-                  <TableCell>string</TableCell>
-                  <TableCell></TableCell>
+                  <TableCell>string || null</TableCell>
+                  <TableCell>
+                    This value is usually not filled out.
+                    <PDFExternalLink page={7} />
+                  </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>mode_s_code_hex</TableCell>
                   <TableCell>string</TableCell>
-                  <TableCell></TableCell>
+                  <TableCell>
+                    The aircraft Mode S transponder code as a hexadecimal
+                    string.
+                  </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>aircraft_info</TableCell>
-                  <TableCell>string</TableCell>
+                  <TableCell>
+                    <Link
+                      href="#acft-mdl-info"
+                      className="underline hover:opacity-80 active:opacity-65"
+                    >
+                      AircraftModelObject
+                    </Link>
+                  </TableCell>
                   <TableCell></TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>engine_info</TableCell>
-                  <TableCell>string</TableCell>
+                  <TableCell>
+                    <Link
+                      href="#eng-mdl-info"
+                      className="underline hover:opacity-80 active:opacity-65"
+                    >
+                      EngineModelObject
+                    </Link>
+                  </TableCell>
                   <TableCell></TableCell>
                 </TableRow>
               </TableBody>
