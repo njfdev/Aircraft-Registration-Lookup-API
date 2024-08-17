@@ -67,3 +67,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+pre {
+  overflow-y: scroll;
+}
+
+code {
+  word-wrap: break-word;
+}

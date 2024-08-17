@@ -731,7 +731,7 @@ function TryYourselfAPIBlock({
 
   return (
     <div className="flex flex-col gap-1">
-      <div className="flex gap-1 w-full *:grow">
+      <div className="flex sm:flex-row flex-col gap-1 w-full *:grow">
         {parameters.map((parameter) => {
           return (
             <Button
