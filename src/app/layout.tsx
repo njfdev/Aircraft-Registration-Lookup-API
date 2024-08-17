@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/ModeToggle";
 import { NavigationBar } from "@/components/NavigationBar";
 import { Badge } from "@/components/ui/badge";
+import TopBar from "@/components/TopBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,12 +28,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="p-4">
-            <ModeToggle />
-            <Badge className="absolute m-2">API v0</Badge>
-            <NavigationBar />
-            {children}
-          </div>
+          <TopBar />
+          <div className="p-4 pt-12">{children}</div>
         </ThemeProvider>
       </body>
     </html>

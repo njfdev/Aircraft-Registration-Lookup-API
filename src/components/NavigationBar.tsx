@@ -12,8 +12,8 @@ import { ReactNode } from "react";
 
 export function NavigationBar() {
   return (
-    <NavigationMenu className="mx-auto">
-      <NavigationMenuList>
+    <NavigationMenu className="absolute">
+      <NavigationMenuList className="w-screen flex items-center justify-center align-middle">
         <NavigationMenuItem>
           <NextNavigationLink href="/">Home</NextNavigationLink>
         </NavigationMenuItem>
