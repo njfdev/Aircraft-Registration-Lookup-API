@@ -29,13 +29,16 @@ export async function GET(
   });
 
   if (!registration) {
-    return Response.json({
-      error: "not_found",
-      message: `Could not find registration data for the specified ${
-        idUpper.startsWith("N") ? "N-Number" : "Mode S Hex Code"
-      }.`,
-    });
+    return Response.json(
+      {
+        error: "not_found",
+        message: `Could not find registration data for the specified ${
+          idUpper.startsWith("N") ? "N-Number" : "Mode S Hex Code"
+        }.`,
+      },
+      { status: 404 }
+    );
   }
 
-  return Response.json({ registration });
+  return Response.json({ registration }, { status: 200 });
 }

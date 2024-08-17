@@ -17,5 +17,5 @@ export async function GET(req: NextRequest) {
     })
   )[0];
 
-  return Response.json({ aircraft_info });
+  return Response.json({ aircraft_info }, { status: 200 });
 }

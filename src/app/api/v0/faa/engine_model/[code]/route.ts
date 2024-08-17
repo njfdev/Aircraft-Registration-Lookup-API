@@ -17,11 +17,14 @@ export async function GET(
   });
 
   if (!engine_info) {
-    return Response.json({
-      error: "not_found",
-      message: "Could not find an engine for the specified model code.",
-    });
+    return Response.json(
+      {
+        error: "not_found",
+        message: "Could not find an engine for the specified model code.",
+      },
+      { status: 404 }
+    );
   }
 
-  return Response.json({ engine_info });
+  return Response.json({ engine_info }, { status: 200 });
 }

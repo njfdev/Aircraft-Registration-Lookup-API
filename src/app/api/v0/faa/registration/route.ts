@@ -21,5 +21,5 @@ export async function GET(req: NextRequest) {
     })
   )[0];
 
-  return Response.json({ registration });
+  return Response.json({ registration }, { status: 200 });
 }

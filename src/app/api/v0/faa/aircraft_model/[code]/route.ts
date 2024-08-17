@@ -17,11 +17,14 @@ export async function GET(
   });
 
   if (!aircraft_info) {
-    return Response.json({
-      error: "not_found",
-      message: "Could not find an aircraft for the specified model code.",
-    });
+    return Response.json(
+      {
+        error: "not_found",
+        message: "Could not find an aircraft for the specified model code.",
+      },
+      { status: 404 }
+    );
   }
 
-  return Response.json({ aircraft_info });
+  return Response.json({ aircraft_info }, { status: 200 });
 }

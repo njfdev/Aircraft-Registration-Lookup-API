@@ -17,5 +17,5 @@ export async function GET(req: NextRequest) {
     })
   )[0];
 
-  return Response.json({ engine_info });
+  return Response.json({ engine_info }, { status: 200 });
 }
