@@ -150,7 +150,7 @@ model FaaEngineInfo {
   code                   String                    @id
   mfr                    String
   model                  String
-  type                   FaaEngineType?
+  type                   FaaEngineType
   // for engine types 1, 2, 3, 7, 8
   horsepower             Int?
   // for engine types 4, 5, 6
