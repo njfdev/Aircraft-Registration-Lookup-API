@@ -19,20 +19,11 @@ import {
 import parse8CharDate from "./utils";
 
 export async function clearFaaData(prisma: PrismaClient) {
-  let deleteResult = await prisma.faaAircraftRegistration.deleteMany();
-  console.log(
-    `Prisma Delete FAA Registration Result: ${JSON.stringify(deleteResult)}`
-  );
-  let deleteResult1 = await prisma.faaAircraftInfo.deleteMany();
+  await prisma.$executeRaw`TRUNCATE TABLE "FaaAircraftRegistration" RESTART IDENTITY CASCADE;`;
 
-  console.log(
-    `Prisma Delete FAA Aircraft Info Result: ${JSON.stringify(deleteResult1)}`
-  );
-  let deleteResult2 = await prisma.faaEngineInfo.deleteMany();
+  await prisma.$executeRaw`TRUNCATE TABLE "FaaAircraftInfo" RESTART IDENTITY CASCADE;`;
 
-  console.log(
-    `Prisma Delete FAA Engine Info Result: ${JSON.stringify(deleteResult2)}`
-  );
+  await prisma.$executeRaw`TRUNCATE TABLE "FaaEngineInfo" RESTART IDENTITY CASCADE;`;
 }
 
 export async function saveFaaRegistrationData(
