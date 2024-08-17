@@ -38,7 +38,7 @@ export default function Home() {
           with the goal to provide a free, public, and simple API for getting
           registration and model information about any given aircraft.
           Currently, arla is updated daily from the Federal Aviation
-          Administration's (FAA){" "}
+          Administration&apos;s (FAA){" "}
           <Link
             className="underline hover:opacity-80 active:opacity-65 transition-opacity"
             href="https://www.faa.gov/licenses_certificates/aircraft_certification/aircraft_registry/releasable_aircraft_download"

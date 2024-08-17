@@ -1,3 +1,7 @@
+const MAX_FREE_REQUESTS_PER_MINUTE = 512;
+
+export { MAX_FREE_REQUESTS_PER_MINUTE };
+
 export interface AircraftRegistrationRawInfo {
   "N-NUMBER": string;
   "SERIAL NUMBER": string;

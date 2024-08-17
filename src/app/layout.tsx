@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/ModeToggle";
 import { NavigationBar } from "@/components/NavigationBar";
+import { Badge } from "@/components/ui/badge";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
         >
           <div className="p-4">
             <ModeToggle />
+            <Badge className="absolute m-2">API v0</Badge>
             <NavigationBar />
             {children}
           </div>
