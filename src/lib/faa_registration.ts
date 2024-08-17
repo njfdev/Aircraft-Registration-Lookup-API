@@ -23,15 +23,15 @@ export async function clearFaaData(prisma: PrismaClient) {
   console.log(
     `Prisma Delete FAA Registration Result: ${JSON.stringify(deleteResult)}`
   );
-  deleteResult = await prisma.faaAircraftInfo.deleteMany();
+  let deleteResult1 = await prisma.faaAircraftInfo.deleteMany();
 
   console.log(
-    `Prisma Delete FAA Aircraft Info Result: ${JSON.stringify(deleteResult)}`
+    `Prisma Delete FAA Aircraft Info Result: ${JSON.stringify(deleteResult1)}`
   );
-  deleteResult = await prisma.faaEngineInfo.deleteMany();
+  let deleteResult2 = await prisma.faaEngineInfo.deleteMany();
 
   console.log(
-    `Prisma Delete FAA Engine Info Result: ${JSON.stringify(deleteResult)}`
+    `Prisma Delete FAA Engine Info Result: ${JSON.stringify(deleteResult2)}`
   );
 }
 

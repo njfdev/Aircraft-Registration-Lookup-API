@@ -5,6 +5,7 @@ import csvParser from "csv-parser";
 //import faa_sample_data, { aircraftInfo, engineInfo } from "../sample_faa_data";
 import { AircraftRegistrationRawInfo } from "@/lib/types";
 import {
+  clearFaaData,
   parseRawFaaAircraft,
   parseRawFaaEngine,
   parseRawFaaRegistration,
@@ -35,6 +36,9 @@ export async function update_faa_data() {
   );
 
   const prisma = new PrismaClient();
+
+  await clearFaaData(prisma);
+  console.log("Finished clearing DB");
 
   const aircraft_csv_buffer = getFileFromFaaZip(zip_object, "ACFTREF.txt");
   await processCsvData(
