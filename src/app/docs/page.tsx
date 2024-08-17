@@ -24,9 +24,13 @@ export default function DocsPage() {
   return (
     <main className="flex flex-col max-w-[42rem] mx-auto mt-4">
       <h1 className="text-3xl font-bold mb-1">Documentation</h1>
-      <p>
-        Welcome to the arla docs! They are pretty simple, but they should help
-        you getting started and understanding the API.
+      <p>Welcome to the arla docs!</p>
+      <p className="mt-2">
+        This version of the API just pulls information directly from the FAA
+        with minimal processing. Because the FAA provides the information in all
+        capital letters, all information return by the API will be in capitals.
+        This also means that certain values in the returned result may need more
+        processing by your code.
       </p>
       <h2 className="mt-4 text-2xl font-bold">Rate Limits</h2>
       <Table>
