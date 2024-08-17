@@ -9,7 +9,7 @@ export async function GET(
 
   const aircraft_info = await prisma.faaAircraftInfo.findUnique({
     where: {
-      code,
+      code: code.toUpperCase(),
     },
   });
 

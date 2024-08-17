@@ -66,15 +66,16 @@ export default function DocsPage() {
       <p>
         The API consists of only 3 endpoints. All endpoints listed here must be
         prefix with &quot;/api/v0&quot;. If you call any endpoint without its
-        parameter, a random one will be returned. All parameters are NOT case
-        sensitive.
+        parameter, a random one will be returned. All parameters are NOT
+        case-sensitive.
       </p>
-      <Accordion type="single" collapsible>
+      <Accordion type="multiple" collapsible>
         <AccordionItem value="faa-registration">
           <AccordionTrigger>/faa/registration</AccordionTrigger>
           <AccordionContent className="flex flex-col gap-2 text-base">
             <code className="text-primary">
-              https://arla.njf.dev/api/v0/faa/registration/[MODE_S || N_NUMBER]
+              https://arla.njf.dev/api/v0/faa/registration/[mode_s_hex_code ||
+              n_number]
             </code>
             <p>
               The registration endpoint will return all registration and model
@@ -82,12 +83,12 @@ export default function DocsPage() {
               registration.
             </p>
             <p>
-              <code className="text-primary">MODE_S</code> - The Mode S hex code
-              (a.k.a ICAO Address) is a 6 digit hexadecimal number that uniquely
-              identifies an aircraft such as <code>A06D1D</code>.
+              <code className="text-primary">mode_s_hex_code</code> - The Mode S
+              hex code (a.k.a ICAO Address) is a 6 digit hexadecimal number that
+              uniquely identifies an aircraft such as <code>A06D1D</code>.
             </p>
             <p>
-              <code className="text-primary">N_NUMBER</code> - The N-Number
+              <code className="text-primary">n_number</code> - The N-Number
               registration is specific to aircraft registered with the FAA. It
               is always prefixed with the letter &quot;N&quot;, may not exceed 6
               characters, and can contains letters or numbers. For example,{" "}
@@ -115,11 +116,89 @@ export default function DocsPage() {
         </AccordionItem>
         <AccordionItem value="aircraft-model">
           <AccordionTrigger>/faa/aircraft_model</AccordionTrigger>
-          <AccordionContent></AccordionContent>
+          <AccordionContent className="flex flex-col gap-2 text-base">
+            <code className="text-primary">
+              https://arla.njf.dev/api/v0/faa/aircraft_model/[mft_mdl_code]
+            </code>
+            <p>
+              The aircraft model endpoint will return the FAA's information
+              about a certain aircraft model.
+            </p>
+            <p>
+              <code className="text-primary">mft_mdl_code</code> - The aircraft
+              model code is a specific code (as defined by the FAA) for the
+              model of any aircraft. Many registrations can point to the same
+              aircraft model code. This parameter can be found in the{" "}
+              <Link
+                href=""
+                className="underline hover:opacity-80 active:opacity-65"
+              >
+                aircraft registration object
+              </Link>
+              .
+            </p>
+            <h3 className="text-xl font-semibold">Response Object</h3>
+            <pre className="rounded p-4 dark:bg-stone-900 bg-stone-100">
+              &#123;{"\n"}
+              {"  "}&quot;aircraft_info&quot;:{" "}
+              <Link
+                href=""
+                className="underline hover:opacity-80 active:opacity-65"
+              >
+                AircraftModelObject
+              </Link>
+              {"\n"}
+              &#125;
+            </pre>
+            <h3 className="text-xl font-semibold mt-2">Try Yourself</h3>
+            <TryYourselfAPIBlock
+              endpoint="/faa/aircraft_model"
+              parameters={["", "2110102", "105011A"]}
+            />
+          </AccordionContent>
         </AccordionItem>
         <AccordionItem value="engine-model">
           <AccordionTrigger>/faa/engine_model</AccordionTrigger>
-          <AccordionContent></AccordionContent>
+          <AccordionContent className="flex flex-col gap-2 text-base">
+            <code className="text-primary">
+              https://arla.njf.dev/api/v0/faa/engine_model/[eng_mfr_mdl]
+            </code>
+            <p>
+              The engine model endpoint will return the FAA's information about
+              a certain engine model.
+            </p>
+            <p>
+              <code className="text-primary">eng_mfr_mdl</code> - The engine
+              model code is a specific code (as defined by the FAA) for the
+              model of any engine. Many registrations can have the same engine
+              model code. This parameter can be found in the{" "}
+              <Link
+                href=""
+                className="underline hover:opacity-80 active:opacity-65"
+              >
+                aircraft registration object
+              </Link>
+              .
+            </p>
+            <h3 className="text-xl font-semibold">Response Object</h3>
+            <pre className="rounded p-4 dark:bg-stone-900 bg-stone-100">
+              &#123;{"\n"}
+              {"  "}&quot;engine_info&quot;:{" "}
+              <Link
+                href=""
+                className="underline hover:opacity-80 active:opacity-65"
+              >
+                EngineModelObject
+              </Link>
+              {"\n"}
+              &#125;
+            </pre>
+            <h3 className="text-xl font-semibold mt-2">Try Yourself</h3>
+            <TryYourselfAPIBlock
+              endpoint="/faa/engine_model"
+              parameters={["", "41533", "17003"]}
+            />
+          </AccordionContent>
         </AccordionItem>
       </Accordion>
     </main>
