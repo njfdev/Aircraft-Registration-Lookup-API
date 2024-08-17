@@ -12,7 +12,7 @@ import { ReactNode } from "react";
 
 export function NavigationBar() {
   return (
-    <NavigationMenu className="absolute">
+    <NavigationMenu className="absolute z-10">
       <NavigationMenuList className="w-screen flex items-center justify-center align-middle">
         <NavigationMenuItem>
           <NextNavigationLink href="/">Home</NextNavigationLink>
