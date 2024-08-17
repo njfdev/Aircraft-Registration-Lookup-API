@@ -520,7 +520,122 @@ export default function DocsPage() {
         </AccordionItem>
         <AccordionItem value="acft-mdl-info" id="acft-mdl-info">
           <AccordionTrigger>AircraftModelObject</AccordionTrigger>
-          <AccordionContent className="flex flex-col gap-2 text-base"></AccordionContent>
+          <AccordionContent className="flex flex-col gap-2 text-base">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Param Name</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Description</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>code</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>
+                    A code assigned to the aircraft manufacturer, model and
+                    series.
+                    <PDFExternalLink page={8} />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>mfr</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>Name of the aircraft manufacturer.</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>model</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>Name of the aircraft model and series.</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>aircraft_type</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>
+                    An enum based on the aircraft type. Possible values:{" "}
+                    <code>
+                      GLIDER, BALLOON, BLIMP, FIXED_WING_SINGLE_ENGINE,
+                      FIXED_WING_MULTI_ENGINE, ROTORCRAFT, WEIGHT_SHIFT_CONTROL,
+                      POWERED_PARACHUTE, GYROPLANE, HYBRID_LIFT, OTHER
+                    </code>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>engine_type</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>
+                    An enum based on the engine type. Possible values:{" "}
+                    <code>
+                      NONE, RECIPROCATING, TURBO_PROP, TURBO_SHAFT, TURBO_JET,
+                      TURBO_FAN, RAMJET, TWO_CYCLE, FOUR_CYCLE, UNKNOWN,
+                      ELECTRIC, ROTARY
+                    </code>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>aircraft_cat_code</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>
+                    An enum based on the aircraft category. Possible values:{" "}
+                    <code>LAND, SEA, AMPHIBIAN</code>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>builder_cert_code</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>
+                    An enum based on the builder certification code. Possible
+                    values:{" "}
+                    <code>
+                      TYPE_CERTIFIED, NOT_TYPE_CERTIFIED, LIGHT_SPORT{" "}
+                    </code>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>engine_count</TableCell>
+                  <TableCell>number</TableCell>
+                  <TableCell>Number of engines on the aircraft.</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>seat_count</TableCell>
+                  <TableCell>number</TableCell>
+                  <TableCell>Number of seats on the aircraft.</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>weight_class</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>
+                    An enum based on the aircraft weight class. Possible values:{" "}
+                    <code>CLASS_1, CLASS_2, CLASS_3, CLASS_4</code>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>avg_cruising_speed</TableCell>
+                  <TableCell>number || null</TableCell>
+                  <TableCell>
+                    The average cruising speed of the aircraft model.
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>tc_data_sheet</TableCell>
+                  <TableCell>string || null</TableCell>
+                  <TableCell>
+                    This value is usually not filled out.
+                    <PDFExternalLink page={9} />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>tc_data_holder</TableCell>
+                  <TableCell>string || null</TableCell>
+                  <TableCell>
+                    This value is usually not filled out.
+                    <PDFExternalLink page={9} />
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </AccordionContent>
         </AccordionItem>
         <AccordionItem value="eng-mdl-info" id="eng-mdl-info">
           <AccordionTrigger>EngineModelObject</AccordionTrigger>
