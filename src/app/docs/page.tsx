@@ -140,7 +140,7 @@ export default function DocsPage() {
               https://arla.njf.dev/api/v0/faa/aircraft_model/[mft_mdl_code]
             </code>
             <p>
-              The aircraft model endpoint will return the FAA's information
+              The aircraft model endpoint will return the FAA&apos;s information
               about a certain aircraft model.
             </p>
             <p>
@@ -183,8 +183,8 @@ export default function DocsPage() {
               https://arla.njf.dev/api/v0/faa/engine_model/[eng_mfr_mdl]
             </code>
             <p>
-              The engine model endpoint will return the FAA's information about
-              a certain engine model.
+              The engine model endpoint will return the FAA&apos;s information
+              about a certain engine model.
             </p>
             <p>
               <code className="text-primary">eng_mfr_mdl</code> - The engine
@@ -311,7 +311,7 @@ export default function DocsPage() {
                   <TableCell>registrant_state</TableCell>
                   <TableCell>string || null</TableCell>
                   <TableCell>
-                    The 2 letter code for the registrant's state.
+                    The 2 letter code for the registrant&apos;s state.
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -323,7 +323,8 @@ export default function DocsPage() {
                   <TableCell>registrant_region</TableCell>
                   <TableCell>string || null</TableCell>
                   <TableCell>
-                    An enum based on the registrant's region. Possible values:{" "}
+                    An enum based on the registrant&apos;s region. Possible
+                    values:{" "}
                     <code>
                       EASTERN, SOUTHWESTERN, CENTRAL, WESTERN_PACIFIC, ALASKAN,
                       SOUTHERN, EUROPEAN, GREAT_LAKES, NEW_ENGLAND,
@@ -340,7 +341,7 @@ export default function DocsPage() {
                   <TableCell>registrant_country_code</TableCell>
                   <TableCell>string || null</TableCell>
                   <TableCell>
-                    The 2 letter code for the registrant's country (usually
+                    The 2 letter code for the registrant&apos;s country (usually
                     &quot;US&quot;).
                   </TableCell>
                 </TableRow>
