@@ -12,6 +12,10 @@ export async function GET(req: NextRequest) {
     await prisma.faaAircraftRegistration.findMany({
       take: 1,
       skip: randomIndex,
+      include: {
+        aircraft_info: true,
+        engine_info: true,
+      },
     })
   )[0];
 
