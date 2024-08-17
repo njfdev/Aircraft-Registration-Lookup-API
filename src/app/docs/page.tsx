@@ -639,7 +639,64 @@ export default function DocsPage() {
         </AccordionItem>
         <AccordionItem value="eng-mdl-info" id="eng-mdl-info">
           <AccordionTrigger>EngineModelObject</AccordionTrigger>
-          <AccordionContent className="flex flex-col gap-2 text-base"></AccordionContent>
+          <AccordionContent className="flex flex-col gap-2 text-base">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Param Name</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Description</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>code</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>
+                    A code assigned to the engine manufacturer and model.
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>mfr</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>The name of the engine manufacturer.</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>model</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>The name of the engine model.</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>type</TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>
+                    An enum based on the engine type. Possible values:{" "}
+                    <code>
+                      NONE, RECIPROCATING, TURBO_PROP, TURBO_SHAFT, TURBO_JET,
+                      TURBO_FAN, RAMJET, TWO_CYCLE, FOUR_CYCLE, UNKNOWN,
+                      ELECTRIC, ROTARY
+                    </code>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>horsepower</TableCell>
+                  <TableCell>number || null</TableCell>
+                  <TableCell>
+                    The horsepower for engine types: Reciprocating, Turbo-Prop,
+                    Turbo-Shaft, Two Cycle, and Four Cycle.
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>lbs_of_thrust</TableCell>
+                  <TableCell>number || null</TableCell>
+                  <TableCell>
+                    The pounds of thrust for engine types: Turbo-Jet, Turbo-Fan,
+                    and Ramjet.
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </AccordionContent>
         </AccordionItem>
       </Accordion>
       <h2></h2>
