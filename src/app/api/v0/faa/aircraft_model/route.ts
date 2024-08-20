@@ -10,7 +10,11 @@ export async function GET(req: NextRequest) {
   const prisma = new PrismaClient();
 
   // if no specified id, then get a random aircraft model
-  const count = await prisma.faaAircraftInfo.count();
+  const count = Number(
+    (
+      (await prisma.$queryRaw`SELECT count(*) from "FaaAircraftInfo";`) as any
+    )[0].count
+  );
   const randomIndex = Math.floor(Math.random() * count);
 
   const aircraft_info = (

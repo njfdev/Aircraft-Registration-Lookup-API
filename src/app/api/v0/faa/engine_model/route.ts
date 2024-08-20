@@ -10,7 +10,10 @@ export async function GET(req: NextRequest) {
   const prisma = new PrismaClient();
 
   // if no specified id, then get a random engine model
-  const count = await prisma.faaEngineInfo.count();
+  const count = Number(
+    ((await prisma.$queryRaw`SELECT count(*) from "FaaEngineInfo";`) as any)[0]
+      .count
+  );
   const randomIndex = Math.floor(Math.random() * count);
 
   const engine_info = (
