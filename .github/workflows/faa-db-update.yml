@@ -5,9 +5,9 @@ on:
     branches:
       - main
   schedule:
-    # Run every day at 12:00am central time (5:00am UTC). The FAA csv files,
+    # Run every week on Tuesday at 12:00am central time (5:00am UTC). The FAA csv files,
     # are updated at 11:30am central time, so there is 30 minutes of buffer.
-    - cron: "0 5 * * *"
+    - cron: "0 5 * * 2"
   workflow_dispatch:
 
 jobs:
