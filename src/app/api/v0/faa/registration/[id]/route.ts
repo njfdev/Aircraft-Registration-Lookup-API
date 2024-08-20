@@ -4,6 +4,9 @@ import { NextRequest } from "next/server";
 // revalidate every hour
 export const revalidate = 60 * 60;
 
+// increase max run duration to 30 seconds
+export const maxDuration = 30;
+
 export async function GET(
   req: NextRequest,
   { params: { id } }: { params: { id: string } }
