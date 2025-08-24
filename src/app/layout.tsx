@@ -6,6 +6,7 @@ import { ModeToggle } from "@/components/ModeToggle";
 import { NavigationBar } from "@/components/NavigationBar";
 import { Badge } from "@/components/ui/badge";
 import TopBar from "@/components/TopBar";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +33,12 @@ export default function RootLayout({
           <TopBar />
           <div className="p-4 pt-12">{children}</div>
         </ThemeProvider>
+        <Script
+          defer={true}
+          async={true}
+          src="https://lytics.njf.dev/script.js"
+          data-website-id="ff37b19c-a674-4565-b64f-98c127e64df5"
+        />
       </body>
     </html>
   );
