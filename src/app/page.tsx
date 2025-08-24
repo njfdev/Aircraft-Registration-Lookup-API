@@ -92,7 +92,7 @@ export default function Home() {
               >
                 GitHub Actions
               </Link>{" "}
-              - running the daily update script (~7 minutes of compute) for
+              - running the weekly update script (~7 minutes of compute) for
               free!
             </li>
             <li>
